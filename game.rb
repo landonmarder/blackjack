@@ -84,6 +84,13 @@ class Game
   end
 end
 
-new_game = Game.new
-new_game.deal_hands
-new_game.player_turn
+
+continue_game = true
+while continue_game == true
+  new_game = Game.new
+  new_game.deal_hands
+  new_game.player_turn
+  puts 'Would you like to continue playing (Y/N):'
+  input = gets.chomp.downcase
+  continue_game = false if input == 'n'
+end
