@@ -1,5 +1,5 @@
 class Player
-  attr_accessor :hand
+  attr_accessor :hand, :name
 
   def initialize(name)
     @name = name
@@ -20,28 +20,11 @@ class Player
     hand_score
   end
 
-  def status
-    last_card
-    score_status
-    if over_21?
-      lose
-    end
-  end
-
   def last_card
     puts "The #{@name} was dealt a #{@hand.last.face}"
   end
 
   def score_status
     puts "The #{@name}'s current score is #{score}."
-  end
-
-  def over_21?
-    score > 21
-  end
-
-  def lose
-    puts "#{@name} busts!"
-    abort
   end
 end

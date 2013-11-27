@@ -8,6 +8,7 @@ class Game
     @player = Player.new("Player")
     @dealer = Player.new("Dealer")
     @deck = Deck.new
+    @continue_game = true
   end
 
   def deal_hands
@@ -24,7 +25,7 @@ class Game
 
     if @player.score == 21
       puts "Blackjack! You win!"
-      abort
+      ask_to_play_again
     end
   end
 
@@ -50,7 +51,7 @@ class Game
     if choice == 'h'
       new_card = @deck.next_card
       player_hand << new_card
-      @player.status
+      status(@player)
       player_turn
     else
       puts "The dealer's hand is #{dealer_hand[0].face} and #{dealer_hand[1].face}"
@@ -65,7 +66,7 @@ class Game
       game_result
     else
       dealer_hand << @deck.next_card
-      @dealer.status
+      status(@dealer)
       dealer_turn
     end
   end
@@ -81,16 +82,43 @@ class Game
     else
       puts "You lose!"
     end
+    ask_to_play_again
+  end
+
+  def ask_to_play_again
+    puts 'Would you like to continue playing (Y/N):'
+    input = gets.chomp.downcase
+    if input == 'y'
+      play
+    else
+      exit
+    end
+  end
+
+  def play
+    new_game = Game.new
+    new_game.deal_hands
+    new_game.player_turn
+  end
+
+  def status(player)
+    player.last_card
+    player.score_status
+    if over_21?(player)
+      lose(player)
+    end
+  end
+
+  def over_21?(player)
+    player.score > 21
+  end
+
+  def lose(player)
+    puts "#{player.name} busts!"
+    ask_to_play_again
   end
 end
 
+new_game = Game.new
+new_game.play
 
-continue_game = true
-while continue_game == true
-  new_game = Game.new
-  new_game.deal_hands
-  new_game.player_turn
-  puts 'Would you like to continue playing (Y/N):'
-  input = gets.chomp.downcase
-  continue_game = false if input == 'n'
-end
