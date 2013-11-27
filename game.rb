@@ -5,7 +5,7 @@ require 'pry'
 
 class Game
   def initialize
-    @player = Player.new("Player")
+    @player = Player.new("Player", 10)
     @dealer = Player.new("Dealer")
     @deck = Deck.new
     @continue_game = true
@@ -86,11 +86,11 @@ class Game
       puts "You lose!"
       @player.record_result("losses")
     end
-    puts @player.record
     ask_to_play_again
   end
 
   def ask_to_play_again
+    display_game_info
     puts 'Would you like to continue playing (Y/N):'
     input = gets.chomp.downcase
     if input == 'y'
@@ -100,6 +100,11 @@ class Game
     end
   end
 
+  def display_game_info
+    puts "Game Data"
+    @player.display_score
+  end
+
   def final_results
     puts "Thank you for playing"
     @player.record
@@ -107,6 +112,8 @@ class Game
 
   def play
     @deck = Deck.new
+    player_hand.clear
+    dealer_hand.clear
     deal_hands
     player_turn
   end
@@ -125,6 +132,11 @@ class Game
 
   def lose(player)
     puts "#{player.name} busts!"
+    if player.name == "Dealer"
+      @player.record_result("wins")
+    else
+      @player.record_result("losses")
+    end
     ask_to_play_again
   end
 end

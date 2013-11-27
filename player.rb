@@ -1,9 +1,10 @@
 class Player
-  attr_accessor :hand, :name, :record
+  attr_accessor :hand, :name, :record, :money
 
-  def initialize(name)
+  def initialize(name, money = nil)
     @name = name
     @hand = []
+    @money = money
     @record = { "wins" => 0, "losses" => 0, "ties" => 0 }
   end
 
@@ -32,5 +33,17 @@ class Player
   def record_result(result)
     @record[result] += 1
   end
+
+  def display_score
+    puts "Wins: #{@record['wins']} Losses: #{@record['losses']} Pushes: #{@record['ties']}"
+  end
+
+  # def bet_money(gamble)
+  #   @money -= gamble
+  # end
+
+  # def win_money(gamble)
+  #   @money += gamble * 2
+  # end
 
 end
