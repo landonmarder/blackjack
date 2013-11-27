@@ -12,6 +12,7 @@ class Game
   end
 
   def deal_hands
+    player_bet(@player)
     2.times do
       player_hand << @deck.next_card
     end
@@ -27,6 +28,25 @@ class Game
       @player.record_result("wins")
       puts "Blackjack! You win!"
       ask_to_play_again
+    end
+  end
+
+  def player_bet(player)
+    if @player.money == 0
+      puts 'Sorry, you are out of money :('
+      display_game_info
+      exit
+    else
+      puts "#{player.name} you have $#{player.money}. How much would you like to bet?"
+      puts "(Casino Rules: You must bet in full dollar amounts.)"
+      print '$'
+      input = gets.chomp.to_i
+      if input <= player.money
+        player.bet_money(input)
+      else
+        puts "You don't have enough money for that bet!"
+        player_bet(player)
+      end
     end
   end
 
@@ -77,13 +97,15 @@ class Game
     puts "The player's final score is #{@player.score}."
     puts "The dealer's final score is #{@dealer.score}."
     if @player.score > @dealer.score
-      puts "You win!"
+      puts "You win $#{@player.bet}!"
       @player.record_result("wins")
+      @player.win_money
     elsif @player.score == @dealer.score
       puts "It's a push. No winner."
       @player.record_result("ties")
+      @player.push_money
     else
-      puts "You lose!"
+      puts "You lose $#{@player.bet}"
       @player.record_result("losses")
     end
     ask_to_play_again
@@ -133,7 +155,9 @@ class Game
   def lose(player)
     puts "#{player.name} busts!"
     if player.name == "Dealer"
+      puts "You win $#{@player.bet}!"
       @player.record_result("wins")
+      @player.win_money
     else
       @player.record_result("losses")
     end

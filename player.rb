@@ -1,11 +1,12 @@
 class Player
-  attr_accessor :hand, :name, :record, :money
+  attr_accessor :hand, :name, :record, :money, :bet
 
   def initialize(name, money = nil)
     @name = name
     @hand = []
     @money = money
     @record = { "wins" => 0, "losses" => 0, "ties" => 0 }
+    @bet = 0
   end
 
   def score
@@ -36,14 +37,19 @@ class Player
 
   def display_score
     puts "Wins: #{@record['wins']} Losses: #{@record['losses']} Pushes: #{@record['ties']}"
+    puts "Current Bank Account: $#{@money}"
   end
 
-  # def bet_money(gamble)
-  #   @money -= gamble
-  # end
+  def bet_money(gamble)
+    @bet = gamble
+    @money -= @bet
+  end
 
-  # def win_money(gamble)
-  #   @money += gamble * 2
-  # end
+  def win_money
+    @money += @bet * 2
+  end
 
+  def push_money
+    @money += @bet
+  end
 end
