@@ -22,18 +22,13 @@ class Game
     end
 
     display_hand(player_hand)
-    display_hand(dealer_hand)
-
-    # puts "Player was dealt #{player_hand.each {|card| card.face}}"
     puts "Player's current score is: #{@player.score}"
+    puts "Dealer was dealt: #{dealer_hand.last.face} and a mystery card"
+
     if @player.score == 21
       puts "Blackjack! You win!"
       abort
     end
-    # puts "Dealer was dealt #{dealer_hand.last}"
-    # puts "Dealer was dealt #{dealer_hand.join(' and ')}"
-    puts "Dealer's current score is: #{@dealer.score} "
-    binding.pry
   end
 
   def player_hand
@@ -45,9 +40,11 @@ class Game
   end
 
   def display_hand(hand)
+    print "The player was dealt: "
     hand.each do |card|
-      puts card.face
+      print "#{card.face} "
     end
+    print "\n"
   end
 end
 

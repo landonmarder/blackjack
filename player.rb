@@ -6,16 +6,16 @@ class Player
   end
 
   def score
-    score = 0
+    hand_score = 0
     @hand.each do |card|
-      if !card.rank == "A"
-        score += card.value
-      elsif (score + card.value[1]) > 21
-        score += card.value[0]
+      if card.rank != "A"
+        hand_score += card.value
+      elsif (hand_score + card.value[1]) > 21
+        hand_score += card.value[0]
       else
-        score += card.value[1]
+        hand_score += card.value[1]
       end
     end
-    score
+    hand_score
   end
 end
