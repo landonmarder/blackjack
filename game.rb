@@ -24,8 +24,8 @@ class Game
     puts "Dealer was dealt: #{dealer_hand.last.face} and a mystery card"
 
     if @player.score == 21
+      @player.record_result("wins")
       puts "Blackjack! You win!"
-      @player.record[:wins] += 1
       ask_to_play_again
     end
   end
@@ -79,7 +79,6 @@ class Game
     if @player.score > @dealer.score
       puts "You win!"
       @player.record_result("wins")
-      binding.pry
     elsif @player.score == @dealer.score
       puts "It's a push. No winner."
       @player.record_result("ties")
@@ -87,6 +86,7 @@ class Game
       puts "You lose!"
       @player.record_result("losses")
     end
+    puts @player.record
     ask_to_play_again
   end
 
@@ -106,9 +106,9 @@ class Game
   end
 
   def play
-    new_game = Game.new
-    new_game.deal_hands
-    new_game.player_turn
+    @deck = Deck.new
+    deal_hands
+    player_turn
   end
 
   def status(player)
