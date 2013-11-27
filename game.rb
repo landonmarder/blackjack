@@ -25,6 +25,7 @@ class Game
 
     if @player.score == 21
       puts "Blackjack! You win!"
+      @player.record[:wins] += 1
       ask_to_play_again
     end
   end
@@ -77,10 +78,14 @@ class Game
     puts "The dealer's final score is #{@dealer.score}."
     if @player.score > @dealer.score
       puts "You win!"
+      @player.record_result("wins")
+      binding.pry
     elsif @player.score == @dealer.score
       puts "It's a push. No winner."
+      @player.record_result("ties")
     else
       puts "You lose!"
+      @player.record_result("losses")
     end
     ask_to_play_again
   end
@@ -93,6 +98,11 @@ class Game
     else
       exit
     end
+  end
+
+  def final_results
+    puts "Thank you for playing"
+    @player.record
   end
 
   def play

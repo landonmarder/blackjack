@@ -4,6 +4,7 @@ class Player
   def initialize(name)
     @name = name
     @hand = []
+    @record = { "wins" => 0, "losses" => 0, "ties" => 0 }
   end
 
   def score
@@ -27,4 +28,9 @@ class Player
   def score_status
     puts "The #{@name}'s current score is #{score}."
   end
+
+  def record_result(result)
+    @record[result] += 1
+  end
+
 end
