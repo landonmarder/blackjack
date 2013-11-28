@@ -34,11 +34,12 @@ class BlackjackGame
 
   def player_bet(player)
     if @player.money == 0
-      puts 'Sorry, you are out of money :('
+      puts 'Sorry, you are out of money.'
       display_game_info
+      puts 'Goodbye!'
       exit
     else
-      puts "#{player.name} you have $#{player.money}. How much would you like to bet?"
+      puts "#{player.name}, you have $#{player.money}. How much would you like to bet?"
       puts '(Casino Rules: Your bet must be in full dollar amounts. Blackjack pays 3:2)'
       print '$'
       input = gets.chomp.to_i
@@ -60,11 +61,11 @@ class BlackjackGame
   end
 
   def display_hand(hand)
-    print 'The player was dealt: '
+    print "#{@player.name} was dealt: "
     hand.each do |card|
       print "#{card.face} "
     end
-    print "\n"
+    puts ""
   end
 
   def player_turn
@@ -113,8 +114,9 @@ class BlackjackGame
   end
 
   def ask_to_play_again
+    puts ""
     display_game_info
-    puts 'Would you like to continue playing (Y/N):'
+    print 'Would you like to continue playing (Y/N):'
     input = gets.chomp.downcase
     if input == 'y'
       play

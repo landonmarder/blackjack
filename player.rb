@@ -55,5 +55,6 @@ class Player
 
   def win_money_blackjack
     @money += @bet * 2.5
+    @money.to_i
   end
 end
