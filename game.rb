@@ -27,6 +27,7 @@ class BlackjackGame
     if @player.score == 21
       @player.record_result('wins')
       puts 'Blackjack! You win!'
+      @player.win_money_blackjack
       ask_to_play_again
     end
   end
@@ -38,7 +39,7 @@ class BlackjackGame
       exit
     else
       puts "#{player.name} you have $#{player.money}. How much would you like to bet?"
-      puts '(Casino Rules: Your bet must be in full dollar amounts.)'
+      puts '(Casino Rules: Your bet must be in full dollar amounts. Blackjack pays 3:2)'
       print '$'
       input = gets.chomp.to_i
       if input <= player.money
