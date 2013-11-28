@@ -3,10 +3,10 @@ require_relative 'player'
 require_relative 'card'
 require 'pry'
 
-class Game
+class BlackjackGame
   def initialize
-    @player = Player.new("Player", 10)
-    @dealer = Player.new("Dealer")
+    @player = Player.new('Player', 100)
+    @dealer = Player.new('Dealer')
     @deck = Deck.new
     @continue_game = true
   end
@@ -25,8 +25,8 @@ class Game
     puts "Dealer was dealt: #{dealer_hand.last.face} and a mystery card"
 
     if @player.score == 21
-      @player.record_result("wins")
-      puts "Blackjack! You win!"
+      @player.record_result('wins')
+      puts 'Blackjack! You win!'
       ask_to_play_again
     end
   end
@@ -38,7 +38,7 @@ class Game
       exit
     else
       puts "#{player.name} you have $#{player.money}. How much would you like to bet?"
-      puts "(Casino Rules: You must bet in full dollar amounts.)"
+      puts '(Casino Rules: Your bet must be in full dollar amounts.)'
       print '$'
       input = gets.chomp.to_i
       if input <= player.money
@@ -59,7 +59,7 @@ class Game
   end
 
   def display_hand(hand)
-    print "The player was dealt: "
+    print 'The player was dealt: '
     hand.each do |card|
       print "#{card.face} "
     end
@@ -67,7 +67,7 @@ class Game
   end
 
   def player_turn
-    print "Hit or stand (H/S):"
+    print 'Hit or stand (H/S):'
     choice = gets.chomp.downcase
     if choice == 'h'
       new_card = @deck.next_card
@@ -83,7 +83,7 @@ class Game
 
   def dealer_turn
     if @dealer.score >= 17
-      puts "The dealer stands."
+      puts 'The dealer stands.'
       game_result
     else
       dealer_hand << @deck.next_card
@@ -93,20 +93,20 @@ class Game
   end
 
   def game_result
-    puts "================="
+    puts '================='
     puts "The player's final score is #{@player.score}."
     puts "The dealer's final score is #{@dealer.score}."
     if @player.score > @dealer.score
       puts "You win $#{@player.bet}!"
-      @player.record_result("wins")
+      @player.record_result('wins')
       @player.win_money
     elsif @player.score == @dealer.score
       puts "It's a push. No winner."
-      @player.record_result("ties")
+      @player.record_result('ties')
       @player.push_money
     else
       puts "You lose $#{@player.bet}"
-      @player.record_result("losses")
+      @player.record_result('losses')
     end
     ask_to_play_again
   end
@@ -118,17 +118,19 @@ class Game
     if input == 'y'
       play
     else
+      puts 'Thank you for playing!'
+      display_game_info
+      puts 'Goodbye!'
       exit
     end
   end
 
   def display_game_info
-    puts "Game Data"
     @player.display_score
   end
 
   def final_results
-    puts "Thank you for playing"
+    puts 'Thank you for playing'
     @player.record
   end
 
@@ -154,17 +156,16 @@ class Game
 
   def lose(player)
     puts "#{player.name} busts!"
-    if player.name == "Dealer"
+    if player.name == 'Dealer'
       puts "You win $#{@player.bet}!"
-      @player.record_result("wins")
+      @player.record_result('wins')
       @player.win_money
     else
-      @player.record_result("losses")
+      @player.record_result('losses')
     end
     ask_to_play_again
   end
 end
 
-new_game = Game.new
+new_game = BlackjackGame.new
 new_game.play
-

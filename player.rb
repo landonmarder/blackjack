@@ -5,14 +5,14 @@ class Player
     @name = name
     @hand = []
     @money = money
-    @record = { "wins" => 0, "losses" => 0, "ties" => 0 }
+    @record = { 'wins' => 0, 'losses' => 0, 'ties' => 0 }
     @bet = 0
   end
 
   def score
     hand_score = 0
     @hand.each do |card|
-      if card.rank != "A"
+      if card.rank != 'A'
         hand_score += card.value
       elsif (hand_score) > 10
         hand_score += 1

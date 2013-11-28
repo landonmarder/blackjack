@@ -17,5 +17,4 @@ class Deck
   def next_card
     @next_card = @deck.pop
   end
-
 end

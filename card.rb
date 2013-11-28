@@ -3,7 +3,7 @@ class Card
   def initialize(suit, rank)
     @suit = suit
     @rank = rank
-    @value = self.value
+    @value = value
   end
 
   def face
@@ -11,13 +11,12 @@ class Card
   end
 
   def value
-    if @rank == "A"
-      [1,11]
+    if @rank == 'A'
+      [1, 11]
     elsif @rank.to_i == 0
       10
     else
       @rank.to_i
     end
   end
-
 end
